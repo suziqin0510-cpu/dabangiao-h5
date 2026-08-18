@@ -698,7 +698,7 @@ function cardHtml(s){
     '<div class="tag-row">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="short">'+s.short+'</p>'+
     '<div class="card-foot">'+
-      (s.phone?'<span class="phone">'+s.phone+'</span>':'<span class="nophone">暂无电话</span>')+
+      (s.phone?'<span class="phone">'+s.phone+'</span>':(s.cat==='集市'?'':'<span class="nophone">暂无电话</span>'))+
       '<button class="detail-btn" data-id="'+s.id+'">查看详情 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></button>'+
     '</div>'+
   '</div></article>';
@@ -786,7 +786,7 @@ function openSheet(id){
     '<h4>'+s.name+'</h4><div class="s-comm">'+s.comm+'</div>'+
     '<div class="s-tags">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="s-full">'+s.full+'</p>'+
-    '<div class="s-phone">'+(s.phone?'<span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a>':'<span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span>')+'</div>'+
+    (s.phone?'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a></div>':(s.cat==='集市'?'':'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span></div>'))+
     '<button class="s-close" id="sheetClose">知道了</button>';
   sheetWrap.classList.add('open');
   document.getElementById('sheetX').addEventListener('click',closeSheet);
