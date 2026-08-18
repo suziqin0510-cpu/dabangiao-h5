@@ -675,7 +675,7 @@ document.querySelectorAll('.carousel').forEach(car=>{
     if(cn) cn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();ct.scrollBy({left:step(),behavior:'smooth'});});
     ct.addEventListener('scroll',upd,{passive:true});
     const hydrate=el=>{
-      if(!el||el.classList.contains('hydrated')) return;
+      if(!el||!el.classList.contains('is-pending')) return;
       el.classList.add('hydrated');
       el.classList.remove('is-pending');
       const img=document.createElement('img');
