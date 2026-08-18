@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eef3f6">
+<title>大板桥 · 山野风物集 | 住宿 · 美食 · 游玩 · 赶集 · 物产</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef3f6;
+    --ink:#12222f;
+    --ink-2:#5d7285;
+    --brand:#2e6f9e;
+    --brand-soft:rgba(46,111,158,.12);
+    --card:#fbfdff;
+    --line:rgba(46,111,158,.16);
+    --shadow:0 20px 40px -15px rgba(46,111,158,.22), 0 4px 12px 0 rgba(46,111,158,.10);
+    --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+    --display:"ZCOOL XiaoWei","Noto Serif SC","Songti SC",serif;
+    --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{
+    font-family:var(--sans);
+    background:
+      radial-gradient(120% 85% at 50% -12%, #f8fbfd, transparent 58%),
+      linear-gradient(180deg, #eef3f6, #e3ebf1);
+    color:var(--ink);
+    line-height:1.6;
+    letter-spacing:0;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+    background-size:140px 140px;
+  }
+  ::selection{background:var(--brand);color:#fff}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* Fixed top nav */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px 12px;
+    background:linear-gradient(to bottom, rgba(8,22,34,.5), rgba(8,22,34,0));
+    transition:background .35s ease, box-shadow .35s ease;
+  }
+  .nav.scrolled{background:rgba(238,243,247,.92);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--line)}
+  .brand{font-family:var(--serif);font-weight:700;font-size:15px;color:#eef4f8;display:flex;align-items:center;gap:8px;letter-spacing:.06em}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:#cfe0ec;box-shadow:0 0 0 4px rgba(207,224,236,.16)}
+  .nav-track{display:flex;gap:2px;align-items:center}
+  .nav-item{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+    color:#dfe9f2;opacity:.9;transition:.3s;
+  }
+  .nav-item .lbl{font-size:9px;font-weight:500;letter-spacing:.02em}
+  .nav-item svg{width:18px;height:18px;stroke-width:1.6}
+  .nav-item.active{opacity:1;color:#ffffff;background:rgba(255,255,255,.16)}
+  .nav.scrolled .brand{color:var(--brand)}
+  .nav.scrolled .brand .dot{background:var(--brand);box-shadow:0 0 0 4px var(--brand-soft)}
+  .nav.scrolled .nav-item{color:var(--ink-2);opacity:.72}
+  .nav.scrolled .nav-item.active{opacity:1;color:var(--brand);background:var(--brand-soft)}
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--brand);z-index:70;border-radius:0 3px 3px 0}
+
+  main{
+    position:relative;
+    max-width:520px;margin:0 auto;
+  }
+  .screen{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:96px 20px 72px;
+    position:relative;
+    background:
+      radial-gradient(130% 85% at 88% -8%, rgba(255,255,255,.65), transparent 52%),
+      radial-gradient(95% 60% at 4% 104%, rgba(46,111,158,.12), transparent 58%),
+      linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 34%),
+      var(--tint,#eef3f6);
+  }
+  .screen.chapter > *{position:relative;z-index:1}
+  .screen.chapter::before{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:140px;z-index:0;pointer-events:none;opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 380 150'%3E%3Cpath d='M0 150V92L54 46l46 52 52-64 54 62 60-46 58 68 56-34v74z' fill='%23346e9c' fill-opacity='.12'/%3E%3Cpath d='M0 150v-42l70-32 62 38 68-44 70 42 62-30 48 26v42z' fill='%23346e9c' fill-opacity='.07'/%3E%3Cpath d='M0 150h380' stroke='%23346e9c' stroke-opacity='.10'/%3E%3C/svg%3E");
+    background-size:380px 140px;background-repeat:repeat-x;
+  }
+  .screen.chapter::after{
+    content:"";position:absolute;right:12px;top:100px;width:110px;height:64px;z-index:0;pointer-events:none;opacity:.55;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cellipse cx='34' cy='46' rx='26' ry='13' fill='%234c84ad' fill-opacity='.08'/%3E%3Cellipse cx='62' cy='40' rx='30' ry='15' fill='%234c84ad' fill-opacity='.09'/%3E%3Cellipse cx='90' cy='48' rx='24' ry='11' fill='%234c84ad' fill-opacity='.07'/%3E%3C/svg%3E");
+    background-size:contain;background-repeat:no-repeat;
+  }
+
+  /* Hero */
+  .hero{
+    justify-content:flex-start;padding:0;overflow:hidden;
+    background:#0b1c2a;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;
+    background-image:url('assets/photos/首页背景图.jpg');
+    background-size:cover;background-position:center;
+  }
+  .hero-shade{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(8,22,34,.5) 0%, rgba(8,22,34,.05) 30%, rgba(8,22,34,.10) 55%, rgba(8,22,34,.72) 100%);
+  }
+  .hero .inner{
+    position:relative;z-index:2;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:120px 22px 48px;
+    color:#eef4f8;
+  }
+  .hero-top{animation:rise .95s cubic-bezier(.2,.7,.3,1) both}
+  .hero-kicker{
+    display:flex;align-items:center;gap:12px;
+    font-size:12px;letter-spacing:.42em;color:#d9e6f1;
+    margin-bottom:24px;
+  }
+  .hero-kicker::before{content:"";width:30px;height:1px;background:rgba(233,241,248,.65)}
+  .hero h1{
+    font-family:var(--display);font-weight:400;
+    font-size:56px;line-height:1.16;color:#fdfeff;
+    letter-spacing:.1em;text-shadow:0 2px 28px rgba(0,0,0,.28);
+  }
+  .hero-en{
+    margin-top:18px;font-size:11.5px;letter-spacing:.44em;color:#d9e6f1;
+  }
+  .hero-bottom{animation:rise .95s .18s cubic-bezier(.2,.7,.3,1) both}
+  .hero-rule{width:46px;height:1px;background:rgba(233,241,248,.6);margin-bottom:20px}
+  .hero-copy{
+    max-width:310px;font-size:14.5px;line-height:2.05;color:#e4eef6;
+    text-shadow:0 1px 18px rgba(0,0,0,.35);
+  }
+  .scroll-hint{
+    margin-top:28px;display:flex;align-items:center;gap:12px;
+    color:#d9e6f1;font-size:11px;letter-spacing:.3em;
+  }
+  .scroll-hint .bar{width:1px;height:44px;background:rgba(233,241,248,.4);position:relative;overflow:hidden}
+  .scroll-hint .bar::after{content:"";position:absolute;left:0;top:0;width:100%;height:15px;background:#e4eef6;animation:drip 1.8s ease-in-out infinite}
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes drip{0%{transform:translateY(-16px)}60%,100%{transform:translateY(48px)}}
+  .page-ind{
+    position:fixed;right:16px;bottom:22px;z-index:50;
+    font-size:12px;letter-spacing:.1em;color:#cfdeeb;
+    text-shadow:0 1px 12px rgba(0,0,0,.3);
+    writing-mode:vertical-rl;
+  }
+  .page-ind b{color:#f6fafd;font-size:15px;font-weight:600}
+  body.past-hero .page-ind{color:var(--ink-2);text-shadow:none}
+  body.past-hero .page-ind b{color:var(--brand)}
+
+  /* Chapter */
+  .chapter-head{display:flex;flex-direction:column;margin-bottom:26px}
+  .chap-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+  .chap-num{font-family:var(--serif);font-weight:600;font-size:60px;line-height:.9;color:var(--brand);height:60px}
+  .chap-en{font-size:11px;letter-spacing:.32em;color:var(--ink-2);margin-top:16px}
+  .chap-deco{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .chap-deco .ln{height:1px;flex:0 0 26px;background:var(--brand);opacity:.5}
+  .chap-deco .dm{width:6px;height:6px;background:var(--brand);transform:rotate(45deg);opacity:.8}
+  .chap-deco .ln2{height:1px;flex:1;background:var(--line)}
+  h2{
+    font-family:var(--serif);font-weight:600;font-size:32px;line-height:1.18;color:var(--brand);
+    margin-top:14px;
+  }
+  .chap-sub{margin-top:8px;font-size:13px;letter-spacing:.12em;color:var(--ink-2)}
+  .chap-meta{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px;padding-top:6px}
+  .swipe-hint{font-size:11px;color:var(--ink-2);letter-spacing:.08em;display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .swipe-hint svg{width:14px;height:14px;stroke-width:1.6}
+  .dot-count{font-family:var(--serif);font-size:20px;color:var(--brand);white-space:nowrap}
+  .dot-count small{font-size:11px;color:var(--ink-2)}
+
+  .carousel{position:relative;margin:0 -20px;padding:6px 20px 4px;overflow:hidden}
+  .track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .track::-webkit-scrollbar{display:none}
+  .track.single{justify-content:center}
+  .card{
+    flex:0 0 78%;max-width:304px;
+    scroll-snap-align:center;
+    background:var(--card);border-radius:20px;overflow:hidden;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+  }
+  .card-img{position:relative;height:224px;overflow:hidden;background:#dbe7ef}
+  .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+  .card:hover .card-img img{transform:scale(1.04)}
+  .ph{
+    width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    position:relative;overflow:hidden;
+  }
+  .ph svg{width:54px;height:54px;stroke-width:1.1;opacity:.9}
+  .ph .pht{font-size:11px;letter-spacing:.3em;color:var(--ink-2);opacity:.8}
+  .ph::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(120px 90px at 82% 14%, rgba(255,255,255,.7), transparent 70%),
+    linear-gradient(150deg, rgba(46,111,158,.10), rgba(46,111,158,.03));}
+  .ph .tint{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center}
+  .card-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+  .chip{
+    align-self:flex-start;display:inline-flex;align-items:center;gap:6px;
+    background:rgba(240,246,251,.92);color:var(--brand);
+    font-size:11px;letter-spacing:.06em;padding:5px 9px;border-radius:4px;
+  }
+  .chip svg{width:13px;height:13px;stroke-width:1.8}
+  h3{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.3;margin-top:12px;color:var(--ink)}
+  .comm{font-size:11.5px;color:var(--ink-2);margin-top:3px;letter-spacing:.04em}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .tag-row span{font-size:10.5px;color:var(--brand);background:var(--brand-soft);padding:3px 8px;border-radius:999px}
+  .card .short{font-size:12.5px;color:var(--ink-2);margin-top:10px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .card-foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .card-foot .phone{font-size:12px;color:var(--brand);letter-spacing:.03em}
+  .card-foot .nophone{font-size:12px;color:var(--ink-2)}
+  .detail-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;color:var(--brand);font-weight:500;
+    padding:8px 12px;border:1px solid var(--line);border-radius:999px;
+    transition:.25s;
+  }
+  .detail-btn:hover{background:var(--brand);color:#fff}
+  .detail-btn svg{width:13px;height:13px;stroke-width:1.8}
+
+  .caro-nav{position:absolute;top:44%;right:14px;z-index:3;display:flex;flex-direction:column;gap:8px}
+  .ca{
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(255,255,255,.92);box-shadow:0 6px 16px rgba(46,111,158,.2);
+    display:flex;align-items:center;justify-content:center;color:var(--brand);
+    transition:.25s;
+  }
+  .ca svg{width:15px;height:15px;stroke-width:2}
+  .ca:disabled{opacity:.35}
+  .ca:not(:disabled):active{transform:scale(.9)}
+
+  .chorus{margin-top:18px;text-align:center;font-size:12.5px;color:var(--ink-2);display:flex;align-items:center;justify-content:center;gap:12px}
+  .chorus::before,.chorus::after{content:"";height:1px;flex:1;max-width:70px;background:var(--line)}
+
+  footer{
+    padding:48px 24px 44px;text-align:center;color:var(--ink-2);font-size:12px;line-height:2;
+    border-top:1px solid var(--line);
+  }
+  footer .f-brand{font-family:var(--serif);font-size:18px;color:var(--brand);font-weight:600}
+  footer .f-en{font-size:10px;letter-spacing:.3em;opacity:.7;margin-top:4px}
+  footer .f-links{display:flex;justify-content:center;gap:22px;margin-top:18px;color:var(--ink);font-size:13px}
+
+  /* Bottom sheet */
+  .sheet-wrap{position:fixed;inset:0;z-index:80;pointer-events:none}
+  .sheet-wrap.open{pointer-events:auto}
+  .mask{position:absolute;inset:0;background:rgba(10,28,42,.46);opacity:0;transition:.35s}
+  .sheet-wrap.open .mask{opacity:1}
+  .sheet{
+    position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;
+    background:var(--paper);border-radius:26px 26px 0 0;padding:12px 22px 34px;
+    transform:translateY(105%);transition:transform .4s cubic-bezier(.22,.9,.28,1);
+    max-height:88vh;overflow:auto;box-shadow:0 -10px 40px rgba(10,28,42,.25);
+  }
+  .sheet-wrap.open .sheet{transform:translateY(0)}
+  .sheet-grip{width:42px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 16px}
+  .sheet .s-chip{display:inline-flex;gap:6px;align-items:center;background:var(--brand-soft);color:var(--brand);font-size:11px;padding:5px 10px;border-radius:4px;letter-spacing:.06em}
+  .sheet .s-chip svg{width:13px;height:13px;stroke-width:1.8}
+  .sheet h4{font-family:var(--serif);font-size:24px;color:var(--ink);margin-top:14px;line-height:1.3}
+  .sheet .s-comm{font-size:12.5px;color:var(--ink-2);margin-top:4px}
+  .sheet .s-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .sheet .s-tags span{font-size:11px;color:var(--brand);background:var(--brand-soft);padding:4px 10px;border-radius:999px}
+  .sheet .s-full{font-size:14px;color:var(--ink);line-height:2;margin-top:18px;text-align:justify}
+  .sheet .s-phone{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:22px;padding:16px 0;border-top:1px solid var(--line)}
+  .sheet .s-phone a{color:var(--brand);font-size:15px;font-weight:600}
+  .sheet .s-close{
+    display:block;width:100%;margin-top:6px;padding:14px;border-radius:999px;
+    background:var(--brand);color:#fff;font-size:14px;letter-spacing:.06em;
+  }
+  .sheet-close-x{position:absolute;top:16px;right:18px;width:32px;height:32px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center}
+  .sheet-close-x svg{width:16px;height:16px;stroke-width:2}
+
+  /* Ambient clouds, mist & fog */
+  .hero .clouds{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;will-change:transform}
+  .cloud{
+    position:absolute;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 70'%3E%3Cg fill='%23ffffff'%3E%3Cellipse cx='42' cy='47' rx='30' ry='15'/%3E%3Cellipse cx='70' cy='41' rx='25' ry='13'/%3E%3Crect x='28' y='46' width='58' height='13' rx='6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:contain;background-repeat:no-repeat;
+  }
+  .cloud.c1{width:220px;height:124px;top:16%;left:-10%;opacity:.4;animation:drift 40s linear infinite}
+  .cloud.c2{width:156px;height:88px;top:46%;left:52%;opacity:.28;animation:drift 56s -18s linear infinite}
+  .cloud.c3{width:122px;height:70px;top:66%;left:20%;opacity:.22;animation:drift 70s -34s linear infinite}
+  @keyframes drift{0%{transform:translateX(-45vw)}100%{transform:translateX(130vw)}}
+  .hero .mist-bottom{
+    position:absolute;left:0;right:0;bottom:-2px;height:64px;z-index:3;pointer-events:none;
+    background:linear-gradient(to top, rgba(240,245,248,.92), rgba(240,245,248,0));
+    filter:blur(5px);
+  }
+  .screen.chapter::after{animation:sway 13s ease-in-out infinite alternate}
+  @keyframes sway{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+
+  /* Card 3D tilt on hover-capable devices */
+  @media (hover:hover) and (pointer:fine){
+    .card{transition:transform .25s ease, box-shadow .25s ease}
+    .card.tilting{
+      transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-3px);
+      box-shadow:0 28px 48px -20px rgba(46,111,158,.38);
+    }
+  }
+
+  /* Soft mist ripple on tap */
+  .ripple{
+    position:fixed;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;
+    pointer-events:none;z-index:45;
+    background:radial-gradient(circle, rgba(255,255,255,.5), rgba(255,255,255,0) 62%);
+    transform:scale(.2);opacity:0;animation:ripple .7s ease-out forwards;
+  }
+  .ripple.dark{background:radial-gradient(circle, rgba(46,111,158,.20), rgba(46,111,158,0) 62%)}
+  @keyframes ripple{0%{transform:scale(.2);opacity:0}18%{opacity:1}100%{transform:scale(1);opacity:0}}
+
+  /* 点亮山野 collect system */
+  .mark{
+    position:absolute;top:10px;right:10px;z-index:3;width:34px;height:34px;border-radius:50%;
+    background:rgba(251,253,255,.92);backdrop-filter:blur(4px);
+    box-shadow:0 6px 14px rgba(46,111,158,.25);
+    display:flex;align-items:center;justify-content:center;color:var(--brand);
+    transition:background .3s, color .3s, transform .3s;
+  }
+  .mark svg{width:17px;height:17px;stroke-width:1.8}
+  .mark.lit{background:var(--brand);color:#fff;animation:pop .35s ease}
+  @keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+  .collect{position:fixed;left:14px;bottom:18px;z-index:56}
+  .collect-btn{
+    width:56px;height:56px;border-radius:50%;position:relative;
+    background:rgba(251,253,255,.9);backdrop-filter:blur(6px);
+    box-shadow:0 10px 24px rgba(46,111,158,.28);
+    display:flex;align-items:center;justify-content:center;color:var(--brand);
+  }
+  .collect-btn .ring{position:absolute;inset:0;width:100%;height:100%}
+  .collect-btn .ring circle{fill:none;stroke-width:3}
+  .collect-btn .ring-bg{stroke:rgba(46,111,158,.15)}
+  .collect-btn .ring-fg{stroke:var(--brand);stroke-linecap:round;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .5s ease}
+  .collect-btn .pin{width:24px;height:24px}
+  .collect-btn .cnt{
+    position:absolute;bottom:-2px;right:-2px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;
+    background:var(--brand);color:#fff;font-size:10px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .collect-panel{
+    position:absolute;left:0;bottom:66px;width:252px;max-height:46vh;overflow:auto;
+    background:rgba(251,253,255,.95);backdrop-filter:blur(8px);
+    border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);
+    padding:14px 16px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.3s;
+  }
+  .collect-panel.open{opacity:1;transform:none;pointer-events:auto}
+  .collect-panel h5{font-family:var(--serif);font-size:15px;color:var(--brand);letter-spacing:.06em}
+  .collect-panel .cp-sub{font-size:10px;color:var(--ink-2);margin:2px 0 10px;letter-spacing:.12em}
+  .collect-panel ul{list-style:none}
+  .collect-panel li{
+    display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink);
+    padding:6px 0;border-bottom:1px dashed var(--line);
+  }
+  .collect-panel li:last-child{border-bottom:none}
+  .collect-panel li .d{width:5px;height:5px;border-radius:50%;background:var(--brand);flex:none}
+  .collect-panel li .cm{color:var(--ink-2);font-size:10.5px;margin-left:auto;white-space:nowrap}
+  .collect-panel .empty{font-size:11.5px;color:var(--ink-2);line-height:1.8}
+  .toast{
+    position:fixed;left:50%;bottom:90px;transform:translate(-50%,14px);z-index:90;
+    background:rgba(18,34,47,.88);color:#eef4f8;font-size:12.5px;
+    padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;
+    transition:.35s;box-shadow:0 10px 24px rgba(8,22,34,.35);white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  @media (max-width:360px){
+    .nav-item{width:38px}
+    .hero h1{font-size:46px}
+    .hero-kicker{font-size:11px;letter-spacing:.34em}
+    .hero-copy{font-size:13.5px}
+    .card{flex-basis:86%}
+  }
+  @media (min-width:500px){
+    .hero h1{font-size:64px}
+    .hero-copy{max-width:340px}
+    .card{flex-basis:304px}
+  }
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="brand"><span class="dot"></span>大板桥 · 山野风物集</div>
+  <div class="nav-track" id="navTrack"></div>
+</header>
+<div class="progress" id="progress"></div>
+<div class="page-ind" id="pageInd"><b>1</b><span>/6</span></div>
+
+<main>
+  <section class="screen hero" id="opening" data-index="1">
+    <div class="hero-bg"></div>
+    <div class="hero-shade"></div>
+    <div class="clouds"><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i></div>
+    <div class="mist-bottom"></div>
+    <div class="inner">
+      <div class="hero-top">
+        <div class="hero-kicker">滇中新区 · 大板桥街道</div>
+        <h1>山野风物集</h1>
+        <div class="hero-en">A COLLECTION OF MOUNTAIN LIFE</div>
+      </div>
+      <div class="hero-bottom">
+        <div class="hero-rule"></div>
+        <p class="hero-copy">雾起老爷山，云漫山谷间。<br>赶一场集市，尝一口本味，把大板桥的日子过成诗。</p>
+        <div class="scroll-hint"><span class="bar"></span>向下滑动</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen chapter" id="stay" style="--tint:#f0f5f8" data-index="2" data-en="STAY" data-num="01" data-title="宿于山野" data-sub="花园秘境 · 山谷院落 · 空港酒店" data-chip="宿于山野" data-ids="1,2,3">
+    <div class="chapter-head">
+      <div class="chap-top">
+        <div><div class="chap-num">01</div><div class="chap-en">STAY · 宿于山野</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>宿于山野</h2><div class="chap-sub">花园秘境 · 山谷院落 · 空港酒店</div></div>
+        <div class="chap-meta"><span class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3l-5 5 5 5M4 8h13a4 4 0 010 8h-3"/></svg>左右滑动</span><span class="dot-count"><small>共</small>3</span></div>
+      </div>
+    </div>
+    <div class="carousel" data-id="1,2,3"><div class="track" data-track></div></div>
+    <div class="chorus">晚安 于山谷之间，醒来 在云雾之上</div>
+  </section>
+
+  <section class="screen chapter" id="food" style="--tint:#f2f6f8" data-index="3" data-en="FOOD" data-num="02" data-title="食在乡野" data-sub="云南本味 · 农家烟火" data-chip="食在乡野" data-ids="4">
+    <div class="chapter-head">
+      <div class="chap-top">
+        <div><div class="chap-num">02</div><div class="chap-en">FOOD · 食在乡野</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>食在乡野</h2><div class="chap-sub">云南本味 · 农家烟火</div></div>
+        <div class="chap-meta"><span class="dot-count"><small>共</small>1</span></div>
+      </div>
+    </div>
+    <div class="carousel" data-id="4"><div class="track single" data-track></div></div>
+    <div class="chorus">一桌地道云南味，是奔波途中最好的抚慰</div>
+  </section>
+
+  <section class="screen chapter" id="explore" style="--tint:#e9f1f6" data-index="4" data-en="EXPLORE" data-num="03" data-title="游于山间" data-sub="登山望远 · 非遗体验 · 田园采摘" data-chip="游于山间" data-ids="5,6,7,8">
+    <div class="chapter-head">
+      <div class="chap-top">
+        <div><div class="chap-num">03</div><div class="chap-en">EXPLORE · 游于山间</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>游于山间</h2><div class="chap-sub">登山望远 · 非遗体验 · 田园采摘</div></div>
+        <div class="chap-meta"><span class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3l-5 5 5 5M4 8h13a4 4 0 010 8h-3"/></svg>左右滑动</span><span class="dot-count"><small>共</small>4</span></div>
+      </div>
+    </div>
+    <div class="carousel" data-id="5,6,7,8"><div class="track" data-track></div></div>
+    <div class="chorus">把脚步交给山野，把时光留给风与云</div>
+  </section>
+
+  <section class="screen chapter" id="market" style="--tint:#edf2f6" data-index="5" data-en="MARKET" data-num="04" data-title="赶集烟火" data-sub="乡土集市 · 市井百味" data-chip="赶集烟火" data-ids="9,10,11">
+    <div class="chapter-head">
+      <div class="chap-top">
+        <div><div class="chap-num">04</div><div class="chap-en">MARKET · 赶集烟火</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>赶集烟火</h2><div class="chap-sub">乡土集市 · 市井百味</div></div>
+        <div class="chap-meta"><span class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3l-5 5 5 5M4 8h13a4 4 0 010 8h-3"/></svg>左右滑动</span><span class="dot-count"><small>共</small>3</span></div>
+      </div>
+    </div>
+    <div class="carousel" data-id="9,10,11"><div class="track" data-track></div></div>
+    <div class="chorus">赶一场集，把日子过成热气腾腾的样子</div>
+  </section>
+
+  <section class="screen chapter" id="products" style="--tint:#e8efee" data-index="6" data-en="PRODUCTS" data-num="05" data-title="山野物产" data-sub="高山果蔬 · 土蜂蜜 · 百年酿酒" data-chip="山野物产" data-ids="12,13,14,15">
+    <div class="chapter-head">
+      <div class="chap-top">
+        <div><div class="chap-num">05</div><div class="chap-en">PRODUCTS · 山野物产</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>山野物产</h2><div class="chap-sub">高山果蔬 · 土蜂蜜 · 百年酿酒</div></div>
+        <div class="chap-meta"><span class="swipe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3l-5 5 5 5M4 8h13a4 4 0 010 8h-3"/></svg>左右滑动</span><span class="dot-count"><small>共</small>4</span></div>
+      </div>
+    </div>
+    <div class="carousel" data-id="12,13,14,15"><div class="track" data-track></div></div>
+    <div class="chorus">把大板桥的山野，装进你的行囊</div>
+  </section>
+</main>
+
+<footer>
+  <div class="f-brand">大板桥 · 山野风物集</div>
+  <div class="f-en">A COLLECTION OF MOUNTAIN LIFE</div>
+  <div class="f-links"><span>点位介绍</span><span>实用信息</span><span>感受大板桥</span></div>
+  <p style="margin-top:16px">滇中新区 · 大板桥街道<br>宿于山野 · 食在乡野 · 游于山间 · 赶集烟火 · 山野物产</p>
+</footer>
+
+<div class="collect" id="collect">
+  <button class="collect-btn" id="collectBtn" aria-label="点亮山野">
+    <svg class="ring" viewBox="0 0 56 56"><circle class="ring-bg" cx="28" cy="28" r="24"/><circle class="ring-fg" id="ringFg" cx="28" cy="28" r="24"/></svg>
+    <svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M6 20l4-9 3 5 3-3 2 7"/><path d="M12 3l1.7 4.8L18.5 9.5l-4.8 1.7L12 16l-1.7-4.8L5.5 9.5l4.8-1.7z"/></svg>
+    <span class="cnt" id="collectCnt">0/15</span>
+  </button>
+  <div class="collect-panel" id="collectPanel"></div>
+</div>
+
+<div class="sheet-wrap" id="sheetWrap">
+  <div class="mask" id="sheetMask"></div>
+  <div class="sheet" id="sheet"></div>
+</div>
+
+<script>
+const CHIPS = {'住宿':'宿于山野','饮食':'食在乡野','游玩':'游于山间','集市':'赶集烟火','农特':'山野物产'};
+const SPOTS = [
+  {id:1, cat:'住宿', name:'喜夏花园民宿', comm:'新发社区', tags:['花园','咖啡','亲子'],
+   short:'占地约20亩的花园秘境民宿，有绣球花海、多肉大棚和景观池塘，还有原木风咖啡馆。',
+   full:'喜夏花园特色民宿位于新发社区羊桃箐小组，占地约20亩。园内有绣球花海、多肉大棚、青石板汀步、景观池塘，整体风格像宫崎骏动画里的梦幻秘境，是滇中新区小众花园打卡地。园内配套原木风花园咖啡馆，可体验园艺休闲、下午茶等，后续还将开放亲子手工体验等公益类活动。',
+   phone:'', photos:['喜夏花园/喜夏花园-1','喜夏花园/喜夏花园-2','喜夏花园/喜夏花园-3','喜夏花园/喜夏花园-4','喜夏花园/喜夏花园-5']},
+  {id:2, cat:'住宿', name:'山谷里民宿', comm:'新发社区', tags:['古村落','非遗','近机场'],
+   short:'依托撒梅人古村改造的乡野民宿，距长水机场约18分钟，可体验甲马、香道、云南美食。',
+   full:'山谷里乡野生活方式民宿位于新发社区拾翠山谷，是依托撒梅人古村落改造的特色乡野民宿，和周边拾翠山谷文旅项目深度融合。距昆明长水国际机场仅18分钟车程，离昆明主城区约30分钟。周边配套非遗工坊、直播基地、乡村市集等，可体验甲马、香道、云南美食，感受"度假式学习"的旅居模式。地址：云南省昆明市滇中新区大板桥街道新发社区新发村拾翠山谷50号院。',
+   phone:'18987872997 / 13708496708', photos:['山谷里/山谷里-1','山谷里/山谷里-2','山谷里/山谷里-3','山谷里/山谷里-4','山谷里/山谷里-5']},
+  {id:3, cat:'住宿', name:'昆明空港希尔顿逸林酒店', comm:'空港大道', tags:['五星','商务','285间客房'],
+   short:'希尔顿集团在大中华区揭幕的第500家酒店，距长水机场10-15分钟车程。',
+   full:'作为希尔顿集团在大中华区揭幕的第500家酒店，昆明空港希尔顿逸林酒店以里程碑之姿落址滇中。酒店位于滇中新区空港大道，总建筑面积46596平方米，配置285间豪华客房，距昆明长水国际机场仅10-15分钟车程。',
+   phone:'0871-67168888', photos:['希尔顿/希尔顿-1','希尔顿/希尔顿-2','希尔顿/希尔顿-3','希尔顿/希尔顿-4']},
+  {id:4, cat:'饮食', name:'长水印象', comm:'长水社区', tags:['农家菜','云南味','性价比'],
+   short:'主打云南本土农家菜的中餐厅，长水机场周边口碑不错的选择，整体性价比高。',
+   full:'长水印象位于官渡区万纬昆明空港园区3期南500米（空港大道南），临近长水机场区域，交通便利，主打云南本土农家菜，整体性价比高，是长水机场周边口碑不错的就餐选择。',
+   phone:'13708705727', photos:['长水农庄/长水农庄-1','长水农庄/长水农庄-2','长水农庄/长水农庄-3','长水农庄/长水农庄-4','长水农庄/长水农庄-5']},
+  {id:5, cat:'游玩', name:'老爷山', comm:'阿底社区', tags:['登高','昆明十峰','非遗庙会'],
+   short:'官渡区最高峰、海拔2730米，可俯瞰滇池与阳宗海；每年农历六月十三有800年历史的庙会。',
+   full:'老爷山原名乌纳山，主峰海拔2730米，为昆明市官渡区最高峰，属昆明十峰之一。山体总面积66平方公里，森林生态系统保存完整。山顶建有土主庙，山腰建有西华寺，登顶可俯瞰滇池、阳宗海及昆明市区。每年农历六月十三举办庙会，庙会已有800余年历史，已入选昆明市非物质文化遗产名录。',
+   phone:'', photos:['老爷山/老爷山-1','老爷山/老爷山-2','老爷山/老爷山-3','老爷山/老爷山-4','老爷山/老爷山-5']},
+  {id:6, cat:'游玩', name:'拾翠山谷', comm:'新发社区', tags:['非遗手作','文创','直播基地'],
+   short:'占地约300亩的乡村农文旅综合体，可体验草木染、香道、掐丝珐琅、甲马等非遗手作。',
+   full:'拾翠山谷位于滇中新区大板桥街道新发社区，占地约300亩，一期提升改造80余栋村民闲置农宅，计划建设三产融合的乡村农文旅综合体。作为小红书"小红村"云南选品直播基地，链接全省非遗手工艺、文创产品、乡村物产、旅居民宿、旅创游学。目前已投用约20栋院落，涵盖草木染、香道、掐丝珐琅、甲马等非遗体验，以及乡村美食、茶饮咖啡空间。',
+   phone:'', photos:['拾翠山谷/拾翠山谷-1','拾翠山谷/拾翠山谷-2','拾翠山谷/拾翠山谷-3','拾翠山谷/拾翠山谷-4','拾翠山谷/拾翠山谷-5']},
+  {id:7, cat:'游玩', name:'沙沟葡萄采摘', comm:'沙沟社区', tags:['亲子采摘','水晶葡萄','葡萄节'],
+   short:'30余年种植历史、约300亩葡萄园，主打水晶葡萄和康能无核小玫瑰。',
+   full:'沙沟社区新复小组已有葡萄种植历史30余年，现有种植面积约300亩，以水晶葡萄和康能无核小玫瑰为主，颗粒饱满、香甜可口、品质优良，是沙沟的重要支柱产业。社区已举办两届葡萄文化节，为优质葡萄、瓜果等农产品搭建展示平台。',
+   phone:'', photos:['沙沟葡萄/沙沟葡萄-1','沙沟葡萄/沙沟葡萄-2','沙沟葡萄/沙沟葡萄-3','沙沟葡萄/沙沟葡萄-4','沙沟葡萄/沙沟葡萄-5']},
+  {id:8, cat:'游玩', name:'沙沟树莓采摘', comm:'沙沟社区', tags:['四季挂果','树莓黑莓','出口品质'],
+   short:'位于大东冲组的黑莓种植基地，栽种约80亩红树莓、黑莓，无土大棚四季挂果。',
+   full:'位于沙沟社区大东冲小组的黑莓种植基地，2025年初完成栽苗，目前栽种面积已达80亩，稳定进入盛果采收期。借宝象河水库优异环境与全年超2200小时日照，云南滇莓农业科技有限公司投资运营的基地栽种红树莓、黑莓，其中20亩高标准大棚采用无土基质盆栽，四季挂果，鲜果远销东南亚与欧洲。',
+   phone:'13577187733', photos:['沙沟树莓/沙沟树莓-1','沙沟树莓/沙沟树莓-2','沙沟树莓/沙沟树莓-3','沙沟树莓/沙沟树莓-4','沙沟树莓/沙沟树莓-5']},
+  {id:9, cat:'集市', name:'云水集市', comm:'云瑞社区', tags:['每周二','7:30-21:30','最热闹'],
+   short:'固定每周二赶集，傍晚17:00后最热闹，品类包含生鲜农货、小吃、日用、干货特产。',
+   full:'云水街集市位于云瑞社区，固定每周二为赶集日，清晨7:30开市，经营至晚上21:30左右，傍晚17:00以后热闹度最高，是周边村民日常采买、乡土商贸的便民集地，充满市井烟火气息。集市品类包括生鲜农货、特色小吃、日用百货、干货特产等。',
+   phone:'', photos:['云水集市/云水集市-1','云水集市/云水集市-2','云水集市/云水集市-3','云水集市/云水集市-4','云水集市/云水集市-5']},
+  {id:10, cat:'集市', name:'云桥集市', comm:'云桥社区', tags:['每周五','山货菌子','手工竹编'],
+   short:'固定每周五赶集，有农户自种有机蔬菜、山采松子菌子、手工竹编和特色小吃。',
+   full:'云桥集市位于昆明市滇中新区大板桥街道云桥社区，是当地居民日常赶集的热门去处，固定每周五为赶集日。集市品类涵盖农户自种的有机蔬菜、山采的松子、菌子，还有手工竹编、特色小吃等，丰富且充满乡土气息。',
+   phone:'', photos:['云桥集市/云桥集市-1','云桥集市/云桥集市-2','云桥集市/云桥集市-3','云桥集市/云桥集市-4']},
+  {id:11, cat:'集市', name:'阿依家园集市', comm:'西冲社区', tags:['每周三/六','惠民','价格实惠'],
+   short:'位于阿依家园的惠民集市，每周三、周六赶集，品类丰富、价格实惠。',
+   full:'阿依家园惠民集市位于大板桥街道西冲社区阿依家园，每周三、周六为固定赶集日，集市品类丰富、价格实惠，是周边居民赶集采购的热门选择。',
+   phone:'', photos:['阿依家园集市/阿依家园集市-1','阿依家园集市/阿依家园集市-2','阿依家园集市/阿依家园集市-3','阿依家园集市/阿依家园集市-4','阿依家园集市/阿依家园集市-5']},
+  {id:12, cat:'农特', name:'沙井"甄白甜"牛奶玉米', comm:'沙井社区', tags:['生吃脆甜','汁水充盈','扩种60余亩'],
+   short:'果皮极薄、汁水充盈的牛奶玉米，生吃脆甜、蒸煮软糯，可生食、可烧烤。',
+   full:'牛奶玉米区别于普通甜玉米，籽粒内含天然乳香物质，生吃就能闻到淡淡牛乳清香，果皮极薄、籽粒饱满多汁，咬开汁水充盈，生吃脆甜，蒸煮后软糯香甜，可生食、可蒸煮、可烧烤。沙井社区2025年引种试种成功，市场反馈良好，今年已扩种至60余亩。',
+   phone:'', photos:['牛奶玉米/牛奶玉米-1','牛奶玉米/牛奶玉米-2','牛奶玉米/牛奶玉米-3','牛奶玉米/牛奶玉米-4','牛奶玉米/牛奶玉米-5']},
+  {id:13, cat:'农特', name:'一朵云蔬菜·花卉', comm:'一朵云社区', tags:['海拔2200米','菜豌豆招牌','可批量供应'],
+   short:'高山云雾地块出产的菜豌豆、白菜、西蓝花等大棵蔬菜，昼夜温差大、口感脆嫩。',
+   full:'一朵云社区位于海拔2200米高山地块，常年云雾环绕、山地生态优良，耕地超6000亩、林地近3万亩。昼夜温差大，果蔬糖分足、口感脆嫩。菜豌豆是一朵云招牌特产，深耕约30年，年产约2380吨；还产出白菜1732吨、西蓝花1500吨、小瓜40吨、水果玉米3000吨、大白豆500吨等，货源稳定、可批量长期供货。',
+   phone:'', photos:['一朵云/一朵云-1','一朵云/一朵云-2','一朵云/一朵云-3','一朵云/一朵云-4']},
+  {id:14, cat:'农特', name:'阿底土蜂蜜', comm:'阿底社区', tags:['百花百草蜜','一年一取','不加工'],
+   short:'来自千米深山原生态林区的一年一取土蜂蜜，不加工、不浓缩，带淡淡药香。',
+   full:'阿底社区地处宝象河水源保护地，终年山花开放，山上遍布野生中草药，蜜源充足且质量上佳。蜜蜂采撷百花与百草精华，一年仅取一次，不加工、不浓缩，保留原蜜的醇厚口感与淡淡药香，源自千米深山原生态林区，居民有养蜂传统。',
+   phone:'', photos:['阿底土蜂蜜/阿底土蜂蜜-1','阿底土蜂蜜/阿底土蜂蜜-2','阿底土蜂蜜/阿底土蜂蜜-3','阿底土蜂蜜/阿底土蜂蜜-4','阿底土蜂蜜/阿底土蜂蜜-5']},
+  {id:15, cat:'农特', name:'沙井酒业', comm:'沙井社区', tags:['百年传承','弱碱水源','三代人'],
+   short:'传承超百年的酿酒技艺，最早可追溯至1900年左右，弱碱水源配本地粮食，香醇。',
+   full:'沙井社区酿酒产业是当地传承超百年的特色富民产业，酿酒技艺最早可追溯至1900年左右，已在当地传承三代人。沙井酿造的白酒香醇，一方面因当地水源为弱碱性，另一方面酒厂使用当地种植的玉米、高粱等优质粮食。',
+   phone:'', photos:['沙井酒业/沙井酒业-1','沙井酒业/沙井酒业-2','沙井酒业/沙井酒业-3','沙井酒业/沙井酒业-4','沙井酒业/沙井酒业-5']}
+];
+
+const ICONS = {
+  '开篇':'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+  '住宿':'<path d="M3 18v-6h18v6"/><path d="M5 18V9a2 2 0 012-2h10a2 2 0 012 2v9"/>',
+  '美食':'<path d="M5 11h14"/><path d="M12 11V5a2 2 0 00-4 0v6"/><path d="M16 20a4 4 0 004-4c0-2-4-2-4-4"/>',
+  '游玩':'<path d="M3 20h18"/><path d="M6 20l4-9 3 5 3-3 2 7"/>',
+  '赶集':'<path d="M4 10l1.5-5h13L20 10"/><path d="M5 10h14v9a1 1 0 01-1 1H6a1 1 0 01-1-1z"/><path d="M9 20v-6h6v6"/>',
+  '物产':'<path d="M11 20A7 7 0 018 6c4 0 6 4 6 8a7 7 0 01-3 6z"/><path d="M5 11c-2 2-2 6 0 8"/><path d="M19 6c-.5 3-1.5 5-3 6"/>',
+  '宿于山野':'<title>宿</title><path d="M3 18v-6h18v6"/><path d="M5 12V9a2 2 0 012-2h3"/><path d="M14 7h3a2 2 0 012 2v3"/>',
+  '食在乡野':'<path d="M5 11h14"/><path d="M12 11V5a2 2 0 00-4 0v6"/>',
+  '游于山间':'<path d="M6 20l4-9 3 5 3-3 2 7"/>',
+  '赶集烟火':'<path d="M4 10l1.5-5h13L20 10"/><path d="M5 10h14v9a1 1 0 01-1 1H6a1 1 0 01-1-1z"/>',
+  '山野物产':'<path d="M11 20A7 7 0 018 6c4 0 6 4 6 8a7 7 0 01-3 6z"/>'
+};
+
+const PLACEH = {
+  '住宿':{tint:'#e6edf2',c1:'#2f6f9e',c2:'#9db8cb',
+    art:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M8 50v-26h48v26"/><path d="M16 50V30a6 6 0 016-6h8"/><path d="M36 24h8a6 6 0 016 6v20"/><circle cx="48" cy="18" r="4"/></svg>'},
+  '饮食':{tint:'#eef2f4',c1:'#4f7f9e',c2:'#a9c0d0',
+    art:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M16 44h32"/><path d="M32 44V22a8 8 0 00-16 0v22"/><path d="M38 26a10 10 0 0110 10"/></svg>'},
+  '游玩':{tint:'#e7eff3',c1:'#3f779e',c2:'#9fbdd0',
+    art:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M8 52h48"/><path d="M18 52l10-22 7 11 6-7 5 18"/><path d="M42 18l4 6"/><circle cx="42" cy="13" r="3"/></svg>'},
+  '集市':{tint:'#edf2f5',c1:'#5a8199',c2:'#a9bccb',
+    art:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M12 30l4-14h32l4 14"/><path d="M12 30h40v22H12z"/><path d="M26 52v-12h12v12"/><path d="M20 30v-6a12 12 0 0124 0v6"/></svg>'},
+  '农特':{tint:'#e6efed',c1:'#3f7d7d',c2:'#9dbab8',
+    art:'<svg viewBox="0 0 64 64" fill="none" stroke="currentColor"><path d="M30 52A18 18 0 0120 16c12 0 18 10 18 20a18 18 0 01-8 16z"/><path d="M14 28c-6 5-6 15 0 20"/><path d="M46 18c-2 8-5 12-9 15"/></svg>'}
+};
+
+const NAV = [['开篇','opening'],['住宿','stay'],['美食','food'],['游玩','explore'],['赶集','market'],['物产','products']];
+
+// 点亮山野：收集点位
+let lit;
+try{ lit = new Set(JSON.parse(localStorage.getItem('dabq_lit')||'[]')); }
+catch(e){ lit = new Set(); }
+function litPersist(){ try{ localStorage.setItem('dabq_lit', JSON.stringify([...lit])); }catch(e){} }
+
+function iconSvg(k){
+  const p = ICONS[k] || ICONS['物产'];
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
+}
+function paint(id){
+  const s = SPOTS.find(x=>x.id===id);
+  if(!s) return {art:'',tint:'#e6edf2',c1:'#2f6f9e'};
+  const p = PLACEH[s.cat] || PLACEH['农特'];
+  return p;
+}
+function phHtml(s){
+  const p = PLACEH[s.cat] || PLACEH['农特'];
+  return '<div class="ph" style="background:'+p.tint+';color:'+p.c1+'">'+p.art+'<span class="pht">占位</span></div>';
+}
+function imgHtml(s){
+  if(!s.photos.length) return phHtml(s);
+  return '<img src="assets/photos/'+s.photos[0]+'.jpg" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
+}
+window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
+
+function cardHtml(s){
+  const ph = s.photos.length ? '' : '<div class="ph-place"></div>';
+  const mark = '<button class="mark'+(lit.has(s.id)?' lit':'')+'" data-id="'+s.id+'" aria-label="点亮山野"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 4.8L18.5 9.5l-4.8 1.7L12 16l-1.7-4.8L5.5 9.5l4.8-1.7z"/></svg></button>';
+  return '<article class="card"><div class="card-img">'+imgHtml(s)+mark+'</div>'+
+    '<div class="card-body">'+
+    '<span class="chip">'+iconSvg(CHIPS[s.cat])+CHIPS[s.cat]+'</span>'+
+    '<h3>'+s.name+'</h3><div class="comm">📍 '+s.comm+'</div>'+
+    '<div class="tag-row">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
+    '<p class="short">'+s.short+'</p>'+
+    '<div class="card-foot">'+
+      (s.phone?'<span class="phone">'+s.phone+'</span>':'<span class="nophone">暂无电话</span>')+
+      '<button class="detail-btn" data-id="'+s.id+'">查看详情 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></button>'+
+    '</div>'+
+  '</div></article>';
+}
+
+// render nav
+const navTrack = document.getElementById('navTrack');
+navTrack.innerHTML = NAV.map(n=>'<button class="nav-item" data-target="'+n[1]+'">'+iconSvg(n[0])+'<span class="lbl">'+n[0]+'</span></button>').join('');
+
+// render carousels
+document.querySelectorAll('.carousel').forEach(car=>{
+  const ids = car.dataset.id.split(',').map(Number);
+  const track = car.querySelector('[data-track]');
+  track.innerHTML = ids.map(id=>cardHtml(SPOTS.find(x=>x.id===id))).join('');
+  if(ids.length>1){
+    const ph = car.querySelectorAll('.card-img .ph').length;
+    const nav = document.createElement('div');
+    nav.className='caro-nav';
+    nav.innerHTML='<button class="ca up" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'+
+      '<button class="ca down" aria-label="下一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+    car.appendChild(nav);
+    const up=nav.querySelector('.up'), down=nav.querySelector('.down');
+    const step=()=>{const cw=track.clientWidth;const card=track.querySelector('.card');const w=(card?card.offsetWidth+16:300);return w;};
+    up.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+    down.addEventListener('click',()=>track.scrollBy({left:step(),behavior:'smooth'}));
+    const upd=()=>{
+      const max=track.scrollWidth-track.clientWidth-4;
+      up.disabled=track.scrollLeft<=4;
+      down.disabled=track.scrollLeft>=max;
+    };
+    track.addEventListener('scroll',upd,{passive:true});
+    upd();
+  }
+});
+
+// bottom sheet
+const sheetWrap=document.getElementById('sheetWrap');
+const sheet=document.getElementById('sheet');
+function openSheet(id){
+  const s=SPOTS.find(x=>x.id===id);if(!s)return;
+  const p=PLACEH[s.cat]||PLACEH['农特'];
+  sheet.innerHTML =
+    '<div class="sheet-close-x" id="sheetX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></div>'+
+    '<div class="sheet-grip"></div>'+
+    '<span class="s-chip">'+iconSvg(CHIPS[s.cat])+CHIPS[s.cat]+' · '+s.id+'</span>'+
+    '<h4>'+s.name+'</h4><div class="s-comm">'+s.comm+'</div>'+
+    '<div class="s-tags">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
+    '<p class="s-full">'+s.full+'</p>'+
+    '<div class="s-phone">'+(s.phone?'<span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a>':'<span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span>')+'</div>'+
+    '<button class="s-close" id="sheetClose">知道了</button>';
+  sheetWrap.classList.add('open');
+  document.getElementById('sheetX').addEventListener('click',closeSheet);
+  document.getElementById('sheetClose').addEventListener('click',closeSheet);
+  document.body.style.overflow='hidden';
+}
+function closeSheet(){sheetWrap.classList.remove('open');document.body.style.overflow='';}
+document.getElementById('sheetMask').addEventListener('click',closeSheet);
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.detail-btn');
+  if(b)openSheet(Number(b.dataset.id));
+});
+
+// collect widget
+const ringFg=document.getElementById('ringFg');
+const collectCnt=document.getElementById('collectCnt');
+const collectPanel=document.getElementById('collectPanel');
+const RING=2*Math.PI*24;
+function renderRing(){
+  const frac=SPOTS.length?lit.size/SPOTS.length:0;
+  ringFg.style.strokeDasharray=RING;
+  ringFg.style.strokeDashoffset=RING*(1-frac);
+  collectCnt.textContent=lit.size+'/'+SPOTS.length;
+}
+function renderPanel(){
+  const items=SPOTS.filter(s=>lit.has(s.id));
+  collectPanel.innerHTML='<h5>点亮山野</h5><div class="cp-sub">已收集 '+items.length+' / '+SPOTS.length+' 处</div>'+
+    (items.length?'<ul>'+items.map(s=>'<li><span class="d"></span>'+s.name+'<span class="cm">'+s.comm+'</span></li>').join('')+'</ul>'
+      :'<div class="empty">还没有点亮点位，去卡片图片右上角点那颗星吧。</div>');
+}
+let toastTimer;
+function toast(msg){
+  let t=document.getElementById('toast');
+  if(!t){ t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t); }
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1600);
+}
+document.addEventListener('click',e=>{
+  const m=e.target.closest('.mark');
+  if(!m)return;
+  const id=Number(m.dataset.id);
+  const s=SPOTS.find(x=>x.id===id);if(!s)return;
+  const on=!lit.has(id);
+  if(on)lit.add(id);else lit.delete(id);
+  litPersist();
+  document.querySelectorAll('.mark[data-id="'+id+'"]').forEach(b=>{
+    b.classList.toggle('lit',on);
+    void b.offsetWidth;
+    if(on)b.classList.add('lit');
+  });
+  renderRing();renderPanel();
+  toast(on?('已点亮 · '+s.name):('已取消 · '+s.name));
+});
+document.getElementById('collectBtn').addEventListener('click',e=>{
+  e.stopPropagation();
+  collectPanel.classList.toggle('open');
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.collect'))collectPanel.classList.remove('open');
+});
+renderRing();renderPanel();
+
+// card 3D tilt (desktop)
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('pointerenter',()=>card.classList.add('tilting'));
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      card.style.setProperty('--ry',(x*6)+'deg');
+      card.style.setProperty('--rx',(-y*6)+'deg');
+    });
+    card.addEventListener('pointerleave',()=>{
+      card.classList.remove('tilting');
+      card.style.setProperty('--rx','0deg');
+      card.style.setProperty('--ry','0deg');
+    });
+  });
+}
+
+// soft mist ripple
+const mainEl=document.querySelector('main');
+mainEl.addEventListener('pointerdown',e=>{
+  const onHero=!!e.target.closest('.hero');
+  const r=document.createElement('span');
+  r.className='ripple'+(onHero?'':' dark');
+  r.style.left=e.clientX+'px';
+  r.style.top=e.clientY+'px';
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),750);
+});
+
+// nav click + scrollspy
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const el=document.getElementById(item.dataset.target);
+    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+
+const sections=[...document.querySelectorAll('.screen')];
+const navItems=[...document.querySelectorAll('.nav-item')];
+const navEl=document.getElementById('nav');
+const progress=document.getElementById('progress');
+const pageInd=document.getElementById('pageInd');
+function onScroll(){
+  const y=window.scrollY;
+  navEl.classList.toggle('scrolled',y>8);
+  document.body.classList.toggle('past-hero',y>window.innerHeight*0.55);
+  const heroClouds=document.querySelector('.hero .clouds');
+  if(heroClouds)heroClouds.style.transform='translate3d(0,'+(y*0.16)+'px,0)';
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  progress.style.width=(docH>0?(y/docH*100):0)+'%';
+  let cur=1;
+  for(let i=0;i<sections.length;i++){
+    const r=sections[i].getBoundingClientRect();
+    if(r.top<=window.innerHeight*0.55)cur=i+1;
+  }
+  pageInd.querySelector('b').textContent=''+cur;
+  navItems.forEach(n=>{
+    const el=document.getElementById(n.dataset.target);
+    const r=el.getBoundingClientRect();
+    n.classList.toggle('active', r.top<=window.innerHeight*0.5 && r.bottom>window.innerHeight*0.5);
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+// reveal
+const revealObs=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revealObs.unobserve(e.target);}});
+},{threshold:.15});
+
+console.log('大板桥 · 山野风物集 就绪');
+</script>
+</body>
+</html>
