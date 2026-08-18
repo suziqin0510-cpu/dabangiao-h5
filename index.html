@@ -192,7 +192,16 @@
   .card-img{position:relative;height:224px;overflow:hidden;background:#dbe7ef}
   .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
   .card:hover .card-img img{transform:scale(1.04)}
-  .img-count{position:absolute;bottom:10px;right:10px;background:rgba(10,28,42,.55);color:#fff;font-size:11px;padding:4px 9px;border-radius:999px;backdrop-filter:blur(4px);letter-spacing:.05em}
+  .card-track{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .card-track::-webkit-scrollbar{display:none}
+  .card-slide{flex:0 0 100%;height:100%;scroll-snap-align:center;overflow:hidden}
+  .card-slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .card-count{position:absolute;bottom:10px;right:10px;background:rgba(10,28,42,.55);color:#fff;font-size:11px;padding:4px 9px;border-radius:999px;backdrop-filter:blur(4px);letter-spacing:.05em}
+  .card-nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--brand);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(10,28,42,.18);z-index:3}
+  .card-nav svg{width:15px;height:15px;stroke-width:2}
+  .cn-prev{left:8px}
+  .cn-next{right:8px}
+  .card-nav:disabled{opacity:.35}
   .ph{
     width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
     position:relative;overflow:hidden;
@@ -277,17 +286,6 @@
   }
   .sheet-close-x{position:absolute;top:16px;right:18px;width:32px;height:32px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center}
   .sheet-close-x svg{width:16px;height:16px;stroke-width:2}
-  .s-gallery{position:relative;margin-top:16px}
-  .sg-track{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:16px}
-  .sg-track::-webkit-scrollbar{display:none}
-  .sg-item{flex:0 0 100%;height:236px;scroll-snap-align:center;overflow:hidden;border-radius:16px;background:var(--brand-soft)}
-  .sg-item img{width:100%;height:100%;object-fit:cover;display:block}
-  .sg-count{position:absolute;bottom:12px;right:14px;background:rgba(10,28,42,.55);color:#fff;font-size:11px;letter-spacing:.08em;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
-  .sg-nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--brand);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(10,28,42,.18)}
-  .sg-nav svg{width:17px;height:17px;stroke-width:2}
-  .sg-prev{left:12px}
-  .sg-next{right:12px}
-  .sg-nav:disabled{opacity:.35}
 
   /* Ambient clouds, mist & fog */
   .hero .clouds{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;will-change:transform}
@@ -620,11 +618,20 @@ function imgHtml(s){
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
+function cardGallery(s){
+  if(!s.photos.length) return imgHtml(s);
+  const slides = s.photos.map((p,i)=>'<div class="card-slide"><img src="assets/photos/'+p+'.jpg" alt="'+s.name+' '+(i+1)+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>').join('');
+  const arrows = s.photos.length>1 ?
+    '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
+    '<button class="card-nav cn-next" aria-label="下一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>' : '';
+  return '<div class="card-track">'+slides+'</div>'+
+    '<span class="card-count">1 / '+s.photos.length+'</span>'+arrows;
+}
+
 function cardHtml(s){
   const ph = s.photos.length ? '' : '<div class="ph-place"></div>';
   const mark = '<button class="mark'+(lit.has(s.id)?' lit':'')+'" data-id="'+s.id+'" aria-label="点亮山野"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.7 4.8L18.5 9.5l-4.8 1.7L12 16l-1.7-4.8L5.5 9.5l4.8-1.7z"/></svg></button>';
-  const cnt = s.photos.length ? '<span class="img-count">'+s.photos.length+' 张</span>' : '';
-  return '<article class="card"><div class="card-img">'+imgHtml(s)+cnt+mark+'</div>'+
+  return '<article class="card"><div class="card-img">'+cardGallery(s)+mark+'</div>'+
     '<div class="card-body">'+
     '<span class="chip">'+iconSvg(CHIPS[s.cat])+CHIPS[s.cat]+'</span>'+
     '<h3>'+s.name+'</h3><div class="comm">📍 '+s.comm+'</div>'+
@@ -646,6 +653,25 @@ document.querySelectorAll('.carousel').forEach(car=>{
   const ids = car.dataset.id.split(',').map(Number);
   const track = car.querySelector('[data-track]');
   track.innerHTML = ids.map(id=>cardHtml(SPOTS.find(x=>x.id===id))).join('');
+  track.querySelectorAll('.card-track').forEach(ct=>{
+    const cc=ct.parentNode.querySelector('.card-count');
+    const cp=ct.parentNode.querySelector('.cn-prev');
+    const cn=ct.parentNode.querySelector('.cn-next');
+    const n=ct.children.length;
+    if(!cc||n<1) return;
+    const upd=()=>{
+      const w=ct.querySelector('.card-slide').offsetWidth||1;
+      const idx=Math.max(0,Math.min(n-1,Math.round(ct.scrollLeft/w)));
+      cc.textContent=(idx+1)+' / '+n;
+      if(cp) cp.disabled=idx<=0;
+      if(cn) cn.disabled=idx>=n-1;
+    };
+    const step=()=>{const s=ct.querySelector('.card-slide');return s?s.offsetWidth:0;};
+    if(cp) cp.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();ct.scrollBy({left:-step(),behavior:'smooth'});});
+    if(cn) cn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();ct.scrollBy({left:step(),behavior:'smooth'});});
+    ct.addEventListener('scroll',upd,{passive:true});
+    upd();
+  });
   if(ids.length>1){
     const ph = car.querySelectorAll('.card-img .ph').length;
     const nav = document.createElement('div');
@@ -670,15 +696,6 @@ document.querySelectorAll('.carousel').forEach(car=>{
 // bottom sheet
 const sheetWrap=document.getElementById('sheetWrap');
 const sheet=document.getElementById('sheet');
-function sgallery(s){
-  if(!s.photos.length) return '';
-  const imgs = s.photos.map((p,i)=>'<div class="sg-item"><img src="assets/photos/'+p+'.jpg" alt="'+s.name+' '+(i+1)+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>').join('');
-  const navs = s.photos.length>1 ?
-    '<button class="sg-nav sg-prev" id="sgPrev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
-    '<button class="sg-nav sg-next" id="sgNext" aria-label="下一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>' : '';
-  return '<div class="s-gallery"><div class="sg-track" id="sgTrack">'+imgs+'</div>'+
-    '<span class="sg-count" id="sgCount">1 / '+s.photos.length+'</span>'+navs+'</div>';
-}
 function openSheet(id){
   const s=SPOTS.find(x=>x.id===id);if(!s)return;
   const p=PLACEH[s.cat]||PLACEH['农特'];
@@ -688,33 +705,12 @@ function openSheet(id){
     '<span class="s-chip">'+iconSvg(CHIPS[s.cat])+CHIPS[s.cat]+' · '+s.id+'</span>'+
     '<h4>'+s.name+'</h4><div class="s-comm">'+s.comm+'</div>'+
     '<div class="s-tags">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
-    sgallery(s)+
     '<p class="s-full">'+s.full+'</p>'+
     '<div class="s-phone">'+(s.phone?'<span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a>':'<span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span>')+'</div>'+
     '<button class="s-close" id="sheetClose">知道了</button>';
   sheetWrap.classList.add('open');
   document.getElementById('sheetX').addEventListener('click',closeSheet);
   document.getElementById('sheetClose').addEventListener('click',closeSheet);
-  const gt=document.getElementById('sgTrack');
-  if(gt){
-    const gc=document.getElementById('sgCount');
-    const gp=document.getElementById('sgPrev');
-    const gn=document.getElementById('sgNext');
-    const n=s.photos.length;
-    const upd=()=>{
-      const item=gt.querySelector('.sg-item');
-      const w=item?item.offsetWidth+10:0;
-      const idx=w?Math.max(0,Math.min(n-1,Math.round(gt.scrollLeft/w))):0;
-      gc.textContent=(idx+1)+' / '+n;
-      if(gp){gp.disabled=idx<=0;}
-      if(gn){gn.disabled=idx>=n-1;}
-    };
-    const step=()=>{const item=gt.querySelector('.sg-item');return item?item.offsetWidth+10:0;};
-    if(gp){gp.addEventListener('click',()=>gt.scrollBy({left:-step(),behavior:'smooth'}));}
-    if(gn){gn.addEventListener('click',()=>gt.scrollBy({left:step(),behavior:'smooth'}));}
-    gt.addEventListener('scroll',upd,{passive:true});
-    upd();
-  }
   document.body.style.overflow='hidden';
 }
 function closeSheet(){sheetWrap.classList.remove('open');document.body.style.overflow='';}
