@@ -157,6 +157,28 @@
   .page-ind b{color:#f6fafd;font-size:15px;font-weight:600}
   body.past-hero .page-ind{color:var(--ink-2);text-shadow:none}
   body.past-hero .page-ind b{color:var(--brand)}
+  .music-btn{
+    position:fixed;right:14px;bottom:66px;z-index:52;
+    width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:#eef4f8;background:rgba(18,34,47,.55);
+    border:1px solid rgba(255,255,255,.22);
+    box-shadow:0 8px 22px rgba(8,22,34,.28);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    transition:transform .25s ease, background .25s ease, color .25s ease;
+  }
+  .music-btn:active{transform:scale(.92)}
+  .music-btn svg{width:20px;height:20px;stroke-width:1.7}
+  body.past-hero .music-btn{color:var(--brand);background:rgba(244,249,252,.92);border-color:rgba(46,111,158,.18);box-shadow:0 8px 20px rgba(8,22,34,.12)}
+  .music-btn .note{display:block}
+  .music-btn .eq{display:none;align-items:flex-end;gap:2.5px;height:16px}
+  .music-btn.playing .note{display:none}
+  .music-btn.playing .eq{display:flex}
+  .music-btn .eq i{display:block;width:3px;border-radius:2px;background:currentColor;animation:eqb 1s ease-in-out infinite}
+  .music-btn .eq i:nth-child(1){height:7px;animation-delay:-.3s}
+  .music-btn .eq i:nth-child(2){height:14px;animation-delay:-.6s}
+  .music-btn .eq i:nth-child(3){height:10px;animation-delay:-.1s}
+  @keyframes eqb{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
 
   /* Chapter */
   .chapter-head{display:flex;flex-direction:column;margin-bottom:26px}
@@ -494,6 +516,12 @@
   <div class="collect-panel" id="collectPanel"></div>
 </div>
 
+<audio id="bgm" src="assets/music/bgm.mp3" loop preload="auto"></audio>
+<button class="music-btn" id="musicBtn" aria-label="背景音乐" title="背景音乐">
+  <svg class="note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+</button>
+
 <div class="sheet-wrap" id="sheetWrap">
   <div class="mask" id="sheetMask"></div>
   <div class="sheet" id="sheet"></div>
@@ -796,6 +824,28 @@ function toast(msg){
   t.textContent=msg;t.classList.add('show');
   clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1600);
 }
+
+// background music
+const bgm=document.getElementById('bgm');
+const musicBtn=document.getElementById('musicBtn');
+bgm.volume=0.4;
+function setMusicUI(on){ musicBtn.classList.toggle('playing',on); musicBtn.setAttribute('aria-pressed',on?'true':'false'); }
+function unlockMusic(){ ['pointerdown','touchstart','click','keydown'].forEach(ev=>document.removeEventListener(ev,startMusic)); }
+function startMusic(){
+  if(!bgm.paused)return;
+  const p=bgm.play();
+  if(p&&p.then){
+    p.then(()=>{setMusicUI(true);unlockMusic();}).catch(()=>{});
+  }else{setMusicUI(true);unlockMusic();}
+}
+['pointerdown','touchstart','click','keydown'].forEach(ev=>document.addEventListener(ev,startMusic,{passive:true}));
+startMusic();
+musicBtn.addEventListener('click',e=>{
+  e.stopPropagation();
+  if(bgm.paused){ startMusic(); }
+  else{ bgm.pause(); setMusicUI(false); toast('背景音乐已暂停'); }
+});
+
 document.addEventListener('click',e=>{
   const m=e.target.closest('.mark');
   if(!m)return;
