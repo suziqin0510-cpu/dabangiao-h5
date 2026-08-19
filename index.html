@@ -622,7 +622,7 @@ const SPOTS = [
   {id:21, cat:'住宿', name:'羊桃箐乡野山居', comm:'新发社区', tags:['近长水机场','青山环抱','乡野慢生活'],
    short:'羊桃箐村，距长水机场十余分钟车程。青山环抱、老院新造，四季皆景，是航班中转与山野慢生活的理想去处。',
    full:'走出喧嚣城市，转角遇见山野田园。这里是大板桥街道新发社区羊桃箐村。它紧邻长水国际机场，从航站楼出发，十余分钟便能驶入这座静谧古村。不必奔波远途，不必长途跋涉，下了飞机就能躲开城市纷扰，一头扎进青山环抱、林木葱郁的乡村院落里，离机场很近，离喧嚣很远，羊桃箐村，等你转角遇见。',
-   phone:'13888599357', photos:['羊桃箐乡野山居/羊桃箐乡野山居-3','羊桃箐乡野山居/羊桃箐乡野山居-2','羊桃箐乡野山居/羊桃箐乡野山居-1','羊桃箐乡野山居/羊桃箐乡野山居-4','羊桃箐乡野山居/羊桃箐乡野山居-5']},
+   phone:'', hidePhone:true, photos:['羊桃箐乡野山居/羊桃箐乡野山居-3','羊桃箐乡野山居/羊桃箐乡野山居-2','羊桃箐乡野山居/羊桃箐乡野山居-1','羊桃箐乡野山居/羊桃箐乡野山居-4','羊桃箐乡野山居/羊桃箐乡野山居-5']},
   {id:22, cat:'集市', name:'阿依广场夜市', comm:'西冲社区', tags:['地道美食','市井烟火','下班治愈'],
    short:'阿依广场夜市，位于大板桥西冲社区，地道美食与烟火气息交织，夜色里的热闹市井，是本地人下班后的治愈好去处。',
    full:'烧烤的滋滋声、油炸的咕嘟声、摊主的吆喝声混在一起，汇成最动听的夜市交响曲。街坊邻居搬个小凳围坐一桌，几串烧烤、一瓶冰啤酒，就能聊到深夜；下班路过的年轻人捎上一份小吃，疲惫在烟火气里悄悄消散；孩子们在灯光下追逐嬉闹，老人们摇着蒲扇闲话家常。阿依广场夜市装的不只是吃食，更是西冲社区的邻里温情与生活。',
@@ -708,7 +708,7 @@ function cardHtml(s){
     '<div class="tag-row">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="short">'+s.short+'</p>'+
     '<div class="card-foot">'+
-      (s.phone?'<span class="phone">'+s.phone+'</span>':(s.cat==='集市'?'':'<span class="nophone">暂无电话</span>'))+
+      (s.phone?'<span class="phone">'+s.phone+'</span>':(s.cat==='集市'||s.hidePhone?'':'<span class="nophone">暂无电话</span>'))+
       '<button class="detail-btn" data-id="'+s.id+'">查看详情 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg></button>'+
     '</div>'+
   '</div></article>';
@@ -797,7 +797,7 @@ function openSheet(id){
     '<div class="s-tags">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="s-full">'+s.full+'</p>'+
     (s.loc?'<div class="s-loc"><div class="s-loc-txt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>'+s.loc+'</span></div><button data-loc="'+s.name+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>查看定位</button></div>':'')+
-    (s.phone?'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a></div>':(s.cat==='集市'?'':'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span></div>'))+
+    (s.phone?'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a></div>':(s.cat==='集市'||s.hidePhone?'':'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span></div>'))+
     '<button class="s-close" id="sheetClose">知道了</button>';
   sheetWrap.classList.add('open');
   document.getElementById('sheetX').addEventListener('click',closeSheet);
