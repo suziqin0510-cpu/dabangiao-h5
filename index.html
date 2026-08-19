@@ -464,14 +464,14 @@
     <div class="chorus">晚安 于山谷之间，醒来 在云雾之上</div>
   </section>
 
-  <section class="screen chapter" id="food" style="--tint:#f2f6f8" data-index="3" data-en="FOOD" data-num="02" data-title="食在乡野" data-sub="云南本味 · 农家烟火" data-chip="食在乡野" data-ids="4,18,19,20">
+  <section class="screen chapter" id="food" style="--tint:#f2f6f8" data-index="3" data-en="FOOD" data-num="02" data-title="食在乡野" data-sub="云南本味 · 农家烟火" data-chip="食在乡野" data-ids="4,18,19,20,23">
     <div class="chapter-head">
       <div class="chap-top">
         <div><div class="chap-num">02</div><div class="chap-en">FOOD · 食在乡野</div><div class="chap-deco"><span class="ln"></span><span class="dm"></span><span class="ln2"></span></div><h2>食在乡野</h2><div class="chap-sub">云南本味 · 农家烟火</div></div>
-        <div class="chap-meta"><span class="dot-count"><small>共</small>4</span></div>
+        <div class="chap-meta"><span class="dot-count"><small>共</small>5</span></div>
       </div>
     </div>
-    <div class="carousel" data-id="4,18,19,20"><div class="track" data-track></div></div>
+    <div class="carousel" data-id="4,18,19,20,23"><div class="track" data-track></div></div>
     <div class="chorus">一桌地道云南味，是奔波途中最好的抚慰</div>
   </section>
 
@@ -619,6 +619,10 @@ const SPOTS = [
    short:'新发社区羊汤锅，代代相传本地味。黑山羊每日鲜宰现煮，羊骨慢熬原汤鲜而不膻，围炉喝汤吃肉，暖身暖心。',
    full:'一锅鲜汤端上桌，搭配羊杂、羊血，再配上云南特色糊辣子蘸水，鲜香瞬间在嘴里迸发。围炉而坐，先喝一碗原汤暖胃，再夹起带皮羊肉蘸上糊辣子，一口下去，寒意全消、浑身通透。一锅鲜汤，半城烟火。新发社区羊汤锅，等你围炉而坐。',
    phone:'13708730660', loc:'新发羊汤锅', photos:['羊汤锅/羊汤锅-1','羊汤锅/羊汤锅-2','羊汤锅/羊汤锅-3','羊汤锅/羊汤锅-4','羊汤锅/羊汤锅-5']},
+  {id:23, cat:'饮食', name:'阿依美食广场', comm:'西冲社区', tags:['集市夜市','烧烤小吃','民族歌舞'],
+   short:'阿依广场，位于大板桥西冲社区，集市烟火与夜市喧嚣相融，热闹鲜活的市井天地，是周边居民休闲欢聚的日常去处。',
+   full:'集市的叫卖声、夜市烧烤的滋滋声响、商铺的喧闹交织在一起，奏响属于大板桥的生活乐章。周三周六集市开市，乡亲们穿梭摊位间挑选生鲜百货；傍晚夜幕降临，外摆桌椅陆续铺开，老友围坐一桌，烧烤小吃配上冰饮，闲话家常直到夜色渐深；结束一天工作的上班族过来打包一份夜宵，卸下一身疲惫；广场空地上，孩童嬉笑奔跑，闲暇的居民三三两两散步闲谈，遇上节庆还会响起民族歌舞，大家围着一同打跳欢闹。阿依广场承载的不只是集市美食，更是西冲社区最朴素鲜活的人间烟火。',
+   phone:'', loc:'阿依家园', photos:['阿依美食广场/阿依美食广场-1','阿依美食广场/阿依美食广场-2','阿依美食广场/阿依美食广场-3','阿依美食广场/阿依美食广场-4']},
   {id:21, cat:'住宿', name:'羊桃箐乡野山居', comm:'新发社区', tags:['近长水机场','青山环抱','乡野慢生活'],
    short:'羊桃箐村，距长水机场十余分钟车程。青山环抱、老院新造，四季皆景，是航班中转与山野慢生活的理想去处。',
    full:'走出喧嚣城市，转角遇见山野田园。这里是大板桥街道新发社区羊桃箐村。它紧邻长水国际机场，从航站楼出发，十余分钟便能驶入这座静谧古村。不必奔波远途，不必长途跋涉，下了飞机就能躲开城市纷扰，一头扎进青山环抱、林木葱郁的乡村院落里，离机场很近，离喧嚣很远，羊桃箐村，等你转角遇见。',
@@ -680,15 +684,15 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.jpg?v=10" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
+  return '<img src="assets/photos/'+s.photos[0]+'.jpg?v=11" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.jpg?v=10" alt="'+s.name+' 1" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
-    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.jpg?v=10" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.jpg?v=11" alt="'+s.name+' 1" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
+    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.jpg?v=11" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
     '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
