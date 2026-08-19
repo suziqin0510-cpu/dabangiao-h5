@@ -442,7 +442,7 @@
     <div class="inner">
       <div class="hero-top">
         <div class="hero-kicker">滇中新区 · 大板桥街道</div>
-        <h1>山野风物集</h1>
+        <h1>征峰老爷山逐梦<br>栖居大板桥归乡</h1>
         <div class="hero-en">A COLLECTION OF MOUNTAIN LIFE</div>
       </div>
       <div class="hero-bottom">
@@ -680,15 +680,15 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.jpg?v=9" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
+  return '<img src="assets/photos/'+s.photos[0]+'.jpg?v=10" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.jpg?v=9" alt="'+s.name+' 1" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
-    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.jpg?v=9" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.jpg?v=10" alt="'+s.name+' 1" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
+    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.jpg?v=10" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
     '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
