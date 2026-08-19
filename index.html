@@ -246,6 +246,9 @@
   .comm{font-size:11.5px;color:var(--ink-2);margin-top:3px;letter-spacing:.04em}
   .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
   .tag-row span{font-size:10.5px;color:var(--brand);background:var(--brand-soft);padding:3px 8px;border-radius:999px}
+  .loc-row{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11.5px;color:var(--brand);cursor:pointer}
+  .loc-row svg{width:13px;height:13px;stroke-width:1.8;flex:none}
+  .loc-row span{line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .card .short{font-size:12.5px;color:var(--ink-2);margin-top:10px;line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .card-foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .card-foot .phone{font-size:12px;color:var(--brand);letter-spacing:.03em}
@@ -303,6 +306,12 @@
   .sheet .s-full{font-size:14px;color:var(--ink);line-height:2;margin-top:18px;text-align:justify}
   .sheet .s-phone{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:22px;padding:16px 0;border-top:1px solid var(--line)}
   .sheet .s-phone a{color:var(--brand);font-size:15px;font-weight:600}
+  .sheet .s-loc{display:flex;align-items:center;gap:14px;justify-content:space-between;margin-top:22px;padding:16px 0;border-top:1px solid var(--line)}
+  .sheet .s-loc-txt{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--ink);line-height:1.6}
+  .sheet .s-loc-txt svg{width:16px;height:16px;stroke-width:1.8;color:var(--brand);flex:none;margin-top:2px}
+  .sheet .s-loc button{white-space:nowrap;padding:9px 14px;border:1px solid var(--brand);border-radius:999px;color:var(--brand);font-size:12px;display:flex;align-items:center;gap:6px;background:none;transition:.25s}
+  .sheet .s-loc button svg{width:14px;height:14px;stroke-width:1.8}
+  .sheet .s-loc button:hover{background:var(--brand);color:#fff}
   .sheet .s-close{
     display:block;width:100%;margin-top:6px;padding:14px;border-radius:999px;
     background:var(--brand);color:#fff;font-size:14px;letter-spacing:.06em;
@@ -541,7 +550,7 @@ const SPOTS = [
   {id:3, cat:'住宿', name:'昆明空港希尔顿逸林酒店', comm:'空港大道', tags:['五星','商务','285间客房'],
    short:'希尔顿集团在大中华区揭幕的第500家酒店，距长水机场10-15分钟车程。',
    full:'作为希尔顿集团在大中华区揭幕的第500家酒店，昆明空港希尔顿逸林酒店以里程碑之姿落址滇中。酒店位于滇中新区空港大道，总建筑面积46596平方米，配置285间豪华客房，距昆明长水国际机场仅10-15分钟车程。',
-   phone:'0871-67168888', photos:['希尔顿/希尔顿-1','希尔顿/希尔顿-2','希尔顿/希尔顿-3','希尔顿/希尔顿-4']},
+   phone:'0871-67168888', loc:'云南省昆明市滇中新区空港大道12001-1号', photos:['希尔顿/希尔顿-1','希尔顿/希尔顿-2','希尔顿/希尔顿-3','希尔顿/希尔顿-4']},
   {id:4, cat:'饮食', name:'长水印象', comm:'长水社区', tags:['农家菜','云南味','性价比'],
    short:'主打云南本土农家菜的中餐厅，长水机场周边口碑不错的选择，整体性价比高。',
    full:'长水印象位于官渡区万纬昆明空港园区3期南500米（空港大道南），临近长水机场区域，交通便利，主打云南本土农家菜，整体性价比高，是长水机场周边口碑不错的就餐选择。',
@@ -695,6 +704,7 @@ function cardHtml(s){
     '<div class="card-body">'+
     '<span class="chip">'+iconSvg(CHIPS[s.cat])+CHIPS[s.cat]+'</span>'+
     '<h3>'+s.name+'</h3><div class="comm">📍 '+s.comm+'</div>'+
+    (s.loc?'<div class="loc-row" data-loc="'+s.name+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>'+s.loc+'</span></div>':'')+
     '<div class="tag-row">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="short">'+s.short+'</p>'+
     '<div class="card-foot">'+
@@ -786,6 +796,7 @@ function openSheet(id){
     '<h4>'+s.name+'</h4><div class="s-comm">'+s.comm+'</div>'+
     '<div class="s-tags">'+s.tags.map(t=>'<span>'+t+'</span>').join('')+'</div>'+
     '<p class="s-full">'+s.full+'</p>'+
+    (s.loc?'<div class="s-loc"><div class="s-loc-txt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>'+s.loc+'</span></div><button data-loc="'+s.name+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>查看定位</button></div>':'')+
     (s.phone?'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2)">预约联系</span><a href="tel:'+s.phone.replace(/\s+\/\s+/g,'')+'">'+s.phone+'</a></div>':(s.cat==='集市'?'':'<div class="s-phone"><span style="font-size:13px;color:var(--ink-2);padding:4px 0">暂无联系电话</span></div>'))+
     '<button class="s-close" id="sheetClose">知道了</button>';
   sheetWrap.classList.add('open');
@@ -795,9 +806,15 @@ function openSheet(id){
 }
 function closeSheet(){sheetWrap.classList.remove('open');document.body.style.overflow='';}
 document.getElementById('sheetMask').addEventListener('click',closeSheet);
+function gotoMap(name){
+  const url='https://uri.amap.com/search?keyword='+encodeURIComponent(name)+'&city='+encodeURIComponent('昆明')+'&src=dbh5&callnative=1';
+  window.open(url,'_blank');
+}
 document.addEventListener('click',e=>{
   const b=e.target.closest('.detail-btn');
   if(b)openSheet(Number(b.dataset.id));
+  const l=e.target.closest('[data-loc]');
+  if(l&&!e.target.closest('.detail-btn'))gotoMap(l.dataset.loc);
 });
 
 // collect widget
