@@ -690,14 +690,14 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=14" alt="'+s.name+'" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
+  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=14" alt="'+s.name+'" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=14" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=14" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}"></div>';
     return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=14" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
@@ -765,7 +765,10 @@ document.querySelectorAll('.carousel').forEach(car=>{
       img.src=el.dataset.src;
       img.alt=(el.dataset.name||'')+' '+(el.dataset.n||'');
       img.loading='lazy';
-      img.onerror=function(){el.innerHTML=window.__ph(+el.dataset.id);};
+      img.onerror=function(){
+        if(img.dataset.fb){ el.innerHTML=window.__ph(+el.dataset.id); }
+        else{ img.dataset.fb=1; img.src=img.src.replace('.webp','.jpg'); }
+      };
       el.appendChild(img);
     };
     const loadAround=()=>{
