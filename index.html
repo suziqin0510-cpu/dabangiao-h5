@@ -690,15 +690,15 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=14" alt="'+s.name+'" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}">';
+  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=15" alt="'+s.name+'" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=14" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}"></div>';
-    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=14" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=15" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}"></div>';
+    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=15" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
     '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
