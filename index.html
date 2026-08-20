@@ -608,7 +608,7 @@ const SPOTS = [
   {id:15, cat:'农特', name:'沙井酒业', comm:'沙井社区', tags:['百年传承','弱碱水源','三代人'],
    short:'传承超百年的酿酒技艺，最早可追溯至1900年左右，弱碱水源配本地粮食，香醇。',
    full:'沙井社区酿酒产业是当地传承超百年的特色富民产业，酿酒技艺最早可追溯至1900年左右，已在当地传承三代人。沙井酿造的白酒香醇，一方面因当地水源为弱碱性，另一方面酒厂使用当地种植的玉米、高粱等优质粮食。',
-   phone:'13708728378', loc:'沙井社区居委会', photos:['沙井酒业/沙井酒业-1','沙井酒业/沙井酒业-2','沙井酒业/沙井酒业-3','沙井酒业/沙井酒业-4','沙井酒业/沙井酒业-5']},
+   phone:'13708728378', loc:'沙井社区居委会', photos:['沙井酒业/沙井酒业-4','沙井酒业/沙井酒业-2','沙井酒业/沙井酒业-3','沙井酒业/沙井酒业-1','沙井酒业/沙井酒业-5']},
   {id:17, cat:'游玩', name:'云桥社区村史馆', comm:'云桥社区', tags:['禄劝乡亲','廿余载','民族团结'],
    short:'云桥社区，2000年禄劝乡亲搬迁至此，二十余载扎根大板桥，民风淳朴，每年农历6月24举办火把节活动。',
    full:'如今的云桥社区已经是淳朴和睦、团结奋进，邻里相亲、守望相助的"幸福家园"。深耕民族特色、聚力文旅融合，致力打造独具辨识度的本土民族文化品牌，让更多人看见云桥、走进云桥。从禄劝到大板桥，搬得出、稳得住、能发展。云桥社区，用二十余年写就一曲民族团结的奋进之歌。',
@@ -690,15 +690,15 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=15" alt="'+s.name+'" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}">';
+  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=16" alt="'+s.name+'" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=15" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}"></div>';
-    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=15" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=16" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="if(this.dataset.fb){this.parentNode.innerHTML=window.__ph('+s.id+')}else{this.dataset.fb=1;this.src=this.src.replace(\'.webp\',\'.jpg\')}"></div>';
+    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=16" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
     '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
