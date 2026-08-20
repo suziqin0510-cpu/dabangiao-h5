@@ -14,6 +14,7 @@
 <meta property="og:image:width" content="600">
 <meta property="og:image:height" content="480">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/photos/首页背景图.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -114,7 +115,7 @@
   }
   .hero-bg{
     position:absolute;inset:0;z-index:0;
-    background-image:url('assets/photos/首页背景图.jpg');
+    background-image:url('assets/photos/首页背景图.webp');
     background-size:cover;background-position:center;
   }
   .hero-shade{
@@ -689,15 +690,15 @@ function phHtml(s){
 }
 function imgHtml(s){
   if(!s.photos.length) return phHtml(s);
-  return '<img src="assets/photos/'+s.photos[0]+'.jpg?v=13" alt="'+s.name+'" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
+  return '<img src="assets/photos/'+s.photos[0]+'.webp?v=14" alt="'+s.name+'" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')">';
 }
 window.__ph = function(id){ return phHtml(SPOTS.find(x=>x.id===id)); };
 
 function cardGallery(s){
   if(!s.photos.length) return imgHtml(s);
   const slides = s.photos.map((p,i)=>{
-    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.jpg?v=13" alt="'+s.name+' 1" loading="lazy" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
-    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.jpg?v=13" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
+    if(i===0) return '<div class="card-slide"><img src="assets/photos/'+p+'.webp?v=14" alt="'+s.name+' 1" loading="lazy" decoding="async" onerror="this.parentNode.innerHTML=window.__ph('+s.id+')"></div>';
+    return '<div class="card-slide is-pending" data-src="assets/photos/'+p+'.webp?v=14" data-id="'+s.id+'" data-n="'+(i+1)+'" data-name="'+s.name+'"></div>';
   }).join('');
   const arrows = s.photos.length>1 ?
     '<button class="card-nav cn-prev" aria-label="上一张"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>'+
